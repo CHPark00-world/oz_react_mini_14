@@ -1,10 +1,29 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import MovieCard from "./MovieCard";
-import movieListData from '../movieListData.json';
 import './MovieCard.css';
 
 const Home = () => {
-    const [movies] = useState(movieListData.results);
+    const [movies, setMovies] = useState([]);
+    
+   useEffect(() => {
+        const SECRET_KEY = import.meta.env.VITE_SECRET_KEY;
+        const url = 'https://api.themoviedb.org/3/movie/popular?language=ko-KR';
+
+        fetch(url, {
+            headers: {
+                Authorization: `Bearer ${SECRET_KEY}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // adult가 false인 영화만 필터링
+            const filteredMovies = data.results.filter(movie => movie.adult === false);
+            setMovies(filteredMovies);
+        })
+        .catch(error => console.error('에러:', error));
+    }, []);
+
 
     return(
       <div style={{
