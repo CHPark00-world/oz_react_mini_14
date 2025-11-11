@@ -1,11 +1,30 @@
 import './MovieDetail.css';
 import movieDetailData from '../movieDetailData.json';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 
 const MovieDetail = () => {
   const navigate = useNavigate();
+  const {id} = useParams();
 
+  useEffect(() => {
+    const SECRET_KEY = import.meta.env.VITE_SECRET_KEY;
+    const url = `https://api.themoviedb.org/3/movie/${id}?language=ko-KR`;
+
+    
+    
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        Authoriztion: `Bearer ${SECRET_KEY}`,
+        accept: 'application/json'
+      }
+    })
+    .then(res => res.json())
+     .then(data => {console.log(data)}
+    )
+  },)
  
   
   return(
