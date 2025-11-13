@@ -6,7 +6,7 @@ const NavBar = () => {
 
   return(
     <nav className='navbar'>
-      <div className='logo'>OZ무비</div>
+      <div className='logo'>새싹 영화관</div>
       <div className='search-bar'>
         <input type='text' placeholder='영화 검색...' />
       </div>

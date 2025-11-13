@@ -1,10 +1,10 @@
 import './MovieDetail.css';
-import movieDetailData from '../movieDetailData.json';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 
 const MovieDetail = () => {
+  const [movie,setMovie] = useState({});
   const navigate = useNavigate();
   const {id} = useParams();
 
@@ -13,29 +13,29 @@ const MovieDetail = () => {
     const url = `https://api.themoviedb.org/3/movie/${id}?language=ko-KR`;
 
     
-    
     fetch(url, {
       method: 'GET',
       headers: {
-        Authoriztion: `Bearer ${SECRET_KEY}`,
+        Authorization: `Bearer ${SECRET_KEY}`,
         accept: 'application/json'
       }
     })
     .then(res => res.json())
-     .then(data => {console.log(data)}
+     .then(data => {
+      setMovie(data)
+     }
     )
-  },)
- 
-  
+  },[id])
+
   return(
     <>
     <div className='movieDetail-container'>
       <button onClick={() => navigate(-1)}>뒤로 가기</button>
-      <img src={`https://image.tmdb.org/t/p/w500/${movieDetailData.poster_path}`} />
+      <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
       <div>
-      <p>제목 : {movieDetailData.title} </p>
-      <p>평점 : {movieDetailData.vote_average}</p>
-      <p>장르 : {movieDetailData.genres.map((genre) => genre.name).join(', ')}</p>
+      <p>제목 : {movie.title} </p>
+      <p>평점 : {movie.vote_average}</p>
+      <p>장르 : {movie.genres?.map((genre) => genre.name).join(', ')}</p>
       </div>
     </div>
     </>
