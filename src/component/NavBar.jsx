@@ -5,16 +5,8 @@ import { useState, useRef } from "react";
 const NavBar = () => {
   const [search, setSearch] = useState("");
 
-  const onChangeSearch = (content) => {
-    setSearch(content.target.value);
-  };
-
-  const getSearchResult = () => {
-    return search === ""
-      ? movieListData
-      : movieListData.filter((it) =>
-          it.movieListData.results.title.includes(search)
-        );
+  const onChangeSearch = (e) => {
+    setSearch(e.target.value);
   };
 
   return (
@@ -22,6 +14,7 @@ const NavBar = () => {
       <div className="logo">새싹 영화관 🌱</div>
       <div className="search-bar">
         <input
+          value={search}
           onChange={onChangeSearch}
           type="text"
           placeholder="영화 검색..."
