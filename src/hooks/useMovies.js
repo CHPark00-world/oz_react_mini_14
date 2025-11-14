@@ -23,9 +23,9 @@ const useMovies = (url) => {
         const res = await fetch(url, options);
         const data = await res.json();
         setMovies(data.results);
-        setLoading(false);
       } catch (err) {
         setError(err);
+      } finally {
         setLoading(false);
       }
     };

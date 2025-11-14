@@ -1,26 +1,42 @@
-import { Link } from 'react-router-dom';
-import './NavBar.css';
-
+import { Link } from "react-router-dom";
+import "./NavBar.css";
+import { useState, useRef } from "react";
 
 const NavBar = () => {
+  const [search, setSearch] = useState("");
 
-  return(
-    <nav className='navbar'>
-      <div className='logo'>새싹 영화관</div>
-      <div className='search-bar'>
-        <input type='text' placeholder='영화 검색...' />
+  const onChangeSearch = (content) => {
+    setSearch(content.target.value);
+  };
+
+  const getSearchResult = () => {
+    return search === ""
+      ? movieListData
+      : movieListData.filter((it) =>
+          it.movieListData.results.title.includes(search)
+        );
+  };
+
+  return (
+    <nav className="navbar">
+      <div className="logo">새싹 영화관 🌱</div>
+      <div className="search-bar">
+        <input
+          onChange={onChangeSearch}
+          type="text"
+          placeholder="영화 검색..."
+        />
       </div>
-      <div className='auth-buttons'>
+      <div className="auth-buttons">
         <Link to="/login">
           <button>로그인</button>
         </Link>
-        <Link to='/signup'>
+        <Link to="/signup">
           <button>회원가입</button>
         </Link>
       </div>
     </nav>
   );
-   
-}
+};
 
 export default NavBar;
